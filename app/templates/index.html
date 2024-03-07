@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link 
+        rel="preconnect" href="https://fonts.googleapis.com"> <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Sen:wght@400;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Movie Website</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <h1 class="logo">RustHub</h1>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item">Home</li>
+                    <li class="menu-list-item">Rust</li>
+                    <li class="menu-list-item">Dota</li>
+                    <li class="menu-list-item">Че тебе еще надо?</li>
+                </ul>
+            </div>
+            <div class="profile-container">
+                <div class="profile-text-container">
+                    {% if user.is_authenticated %}
+                    <span class="profile-text"><a href="{% url 'login' %}">Выйти</a></span>
+                    <span class="profile-text"><a href="#">{{ user.username }}</a></span>
+                    {% else %}
+                    <span class="profile-text"><a href="{% url 'login' %}">Войти</a></span>
+                    {% endif %}
+                    <i class="fas fa-caret-down"></i>
+                </div>
+                <div class="toggle">
+                    <i class="fas fa-moon toggle-icon"></i>
+                    <i class="fas fa-sun toggle-icon"></i>
+                    <div class="toggle-ball"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <i class="left-menu-icon fas fa-search"></i>
+        <i class="left-menu-icon fas fa-home"></i>
+        <i class="left-menu-icon fas fa-users"></i>
+        <i class="left-menu-icon fas fa-bookmark"></i>
+        <i class="left-menu-icon fas fa-tv"></i>
+        <i class="left-menu-icon fas fa-hourglass-start"></i>
+        <i class="left-menu-icon fas fa-shopping-cart"></i>
+    </div>
+    <div class="container">
+        <div class="content-container">
+            <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0 ), #151515), url({% static "images/f-1.jpg"%});">
+                <img class="featured-title" src="{% static 'images/f-t-1.png' %}" alt="">
+                <p class="featured-desc">
+                    Добро пожаловать на мой сайт с мувиками и смешными моментам по такой игре как RUST и DOTA
+                </p>
+            </div>
+            {% if user.is_authenticated %}
+        
+            <div class="movie-list-container">
+                <h1 class="movie-list-title">RUST</h1>
+                <div class="movie-list-wrapper">
+                    <div class="movie-list">
+                        {% for item in rusts %}
+                        <div class="movie-list-item">
+                            <img class="movie-list-item-img" src="{{item.image.url}}" alt="MOVYE: Her.">
+                            <span class="movie-list-item-title">{{item.title}}</span>
+                            <p class="movie-list-item-desc">{{item.description}}</p>
+                            <a class="movie-list-item-button" href="{% url 'rustvideo' id=item.id %}">Ну че позырим?</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                </div>
+            <br>
+            <br>
+            
+    </div>
+
+
+
+    <div class="movie-list-container">
+        <h1 class="movie-list-title">DOTA</h1>
+        <div class="movie-list-wrapper">
+            <div class="movie-list">
+                {% for item in dota %}
+                <div class="movie-list-item">
+                    <img class="movie-list-item-img" src="{{item.image.url}}" alt="MOVYE: Her.">
+                    <span class="movie-list-item-title">{{item.title}}</span>
+                    <p class="movie-list-item-desc">{{item.description}}</p>
+                    <a class="movie-list-item-button" href="{% url 'dotavideo' id=item.id %}">Ну че позырим?</a>
+                </div>
+                {% endfor %}
+            </div>
+            <i class="fas fa-chevron-right arrow "></i>
+        </div>
+</div>
+{% else %}
+<h1>
+    Пожалуйста Авторизуйтесь
+</h1>
+{% endif %}
+    <script src="{% static 'js/main.js'%}"></script>
+</body>
+</html>
